@@ -20,7 +20,7 @@ async def lifespan(_):
     if collection_name in database.list_collection_names():
         documents_collection = database.get_collection(collection_name)
     else:
-        documents_collection = database.create_collections(collection_name)
+        documents_collection = database.create_collection(collection_name)
 
     yield
 
