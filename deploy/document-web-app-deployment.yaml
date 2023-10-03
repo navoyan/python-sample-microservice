@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-web-app
+  labels:
+    app: document-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-web-app
+  template:
+    metadata:
+      name: document-web-app
+      labels:
+        app: document-web-app
+    spec:
+      containers:
+        - name: document-web-app
+          image: docker.io/library/document-web-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8005
+          env:
+            - name: MONGO_URL
+              value: mongodb://mongodb-service.default.svc.cluster.local:27017/
+            - name: DATABASE_NAME
+              value: document-web-app
+            - name: COLLECTION_NAME
+              value: documents
