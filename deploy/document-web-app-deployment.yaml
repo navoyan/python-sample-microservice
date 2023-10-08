@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
         - name: document-web-app
-          image: docker.io/library/document-web-app:latest
+          image: docker.io/dyamo/document-web-app:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8005
           env:
             - name: MONGO_URL
-              value: mongodb://mongodb-service.default.svc.cluster.local:27017/
+              value: mongodb://mongodb-svc.default.svc.cluster.local:27017/
             - name: DATABASE_NAME
               value: document-web-app
             - name: COLLECTION_NAME

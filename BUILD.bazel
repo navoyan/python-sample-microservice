@@ -1,0 +1,34 @@
+load("//bazel/workarounds:py_image_layer.bzl", "py_image_layer")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push")
+
+py_binary(
+    name = "document_web_app_bin",
+    srcs = glob(["src/**/*.py"]),
+    main = "src/run.py",
+    deps = [
+        "@poetry//:fastapi",
+        "@poetry//:uvicorn",
+        "@poetry//:pymongo",
+        "@poetry//:pydantic-settings"
+    ],
+)
+
+py_image_layer(
+    name = "document_web_app_layer",
+    binary = ":document_web_app_bin",
+    root = "/opt",
+)
+
+oci_image(
+    name = "document_web_app_image",
+    base = "@python_base",
+    entrypoint = ["/opt/document_web_app_bin"],
+    tars = [":document_web_app_layer"],
+)
+
+oci_push(
+    name = "document_web_app_push",
+    repository = "index.docker.io/dyamo/document-web-app",
+    image = ":document_web_app_image",
+    remote_tags = ["latest"]
+)
