@@ -27,7 +27,8 @@ var/
 *.egg
 
 # Bazel outputs
-bazel-*/
+bazel-*
+!bazel-*.*
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
