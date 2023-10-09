@@ -1,13 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: document-web-app-svc
+  name: document-web-app-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: document-web-app
   ports:
-    - name: document-web-app
-      nodePort: 30111
-      port: 8005
+    - port: 8005
       targetPort: 8005

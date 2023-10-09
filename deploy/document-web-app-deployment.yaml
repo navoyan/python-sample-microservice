@@ -5,7 +5,7 @@ metadata:
   labels:
     app: document-web-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: document-web-app
@@ -23,7 +23,10 @@ spec:
             - containerPort: 8005
           env:
             - name: MONGO_URL
-              value: mongodb://mongodb-svc.default.svc.cluster.local:27017/
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-admin-user
+                  key: connectionString.standardSrv
             - name: DATABASE_NAME
               value: document-web-app
             - name: COLLECTION_NAME
